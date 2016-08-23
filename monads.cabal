@@ -1,0 +1,16 @@
+name:                monads
+version:             0.1.0.0
+build-type:          Simple
+cabal-version:       >=1.10
+
+executable monads
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  other-modules:       List
+                     , Maybe
+                     , State
+                     , Writer
+  build-depends:       base
+                     , containers
+                     , mtl
+  default-language:    Haskell2010
