@@ -10,6 +10,7 @@ executable monads
                      , Maybe
                      , State
                      , Writer
+                     , FlatMap
   build-depends:       base
                      , containers
                      , mtl
