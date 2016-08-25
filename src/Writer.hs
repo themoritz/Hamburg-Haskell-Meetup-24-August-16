@@ -25,7 +25,9 @@ testTree = Node
   ]
 
 go :: Tree -> Writer [Int] ()
-go tree = undefined
+go tree = case tree of
+  Leaf x -> if even x then tell [x] else tell []
+  Node subs -> mapM_ go subs
 
 collectEvens :: Tree -> [Int]
 collectEvens tree = execWriter (go tree)

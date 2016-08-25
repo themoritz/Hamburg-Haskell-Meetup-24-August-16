@@ -33,7 +33,15 @@ step x = if even x
            else 3 * x + 1
 
 chainLength :: Int -> State (IntMap Int) Int
-chainLength x = undefined
+chainLength x = do
+  cache <- get
+  case IntMap.lookup x cache of
+    Just l -> pure l
+    Nothing -> do
+      stepChainLength <- chainLength (step x)
+      let xChainLength = stepChainLength + 1
+      put (IntMap.insert x xChainLength cache)
+      pure xChainLength
 
 chainLengths :: Int -> State (IntMap Int) [Int]
 chainLengths x = mapM chainLength [1..x]
@@ -42,7 +50,7 @@ longest :: Int -> (Int, Int)
 longest x =
   maximumBy (comparing snd) $
   zip [1..x] $
-  evalState (chainLengths x) IntMap.empty
+  evalState (chainLengths x) (IntMap.singleton 1 1)
 
 run :: IO ()
 run = print $ longest 999999

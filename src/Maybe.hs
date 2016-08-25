@@ -16,7 +16,6 @@ run = do
     Just result -> show result
     Nothing     -> "Could not process input."
   putStrLn ""
-  run
 
 operators :: Map String (Integer -> Integer -> Integer)
 operators = Map.fromList
@@ -28,4 +27,8 @@ operators = Map.fromList
   ]
 
 getResult :: String -> String -> String -> Maybe Integer
-getResult i1 i2 i3 = undefined
+getResult i1 i2 i3 = do
+  x1 <- readMaybe i1
+  op <- Map.lookup i2 operators
+  x2 <- readMaybe i3
+  pure (x1 `op` x2)
