@@ -18,8 +18,29 @@ Find the product a*b*c.
 run :: IO ()
 run = print $ (\(a,b,c) -> a*b*c) special
 
+max' :: Int
+max' = 1000
+
+-- list :: [Int]
+list = [1..max']
+
 special :: (Int, Int, Int)
-special = head $ filter (\(a,b,c) -> a*a+b*b == c*c) triples
+special = head $ filter (\(a,b,c) -> a*a+b*b == c*c && a+b+c == max') triples
 
 triples :: [(Int, Int, Int)]
-triples = undefined
+triples = do
+  x <- pairs
+  triple x
+
+triple :: (Int, Int) -> [(Int, Int, Int)]
+triple a =
+  [(fst(a), snd(a), max'-fst(a)-snd(a))]
+
+pairs :: [(Int, Int)]
+pairs = do
+  x <- list
+  pair x
+
+pair :: Int -> [(Int, Int)]
+pair a =
+  fmap (\x -> (a, x)) list
