@@ -1,7 +1,7 @@
 module Maybe where
 
-import Data.Map as Map (Map, lookup, fromList)
-import Text.Read (readMaybe)
+import           Data.Map  as Map (Map, fromList, lookup)
+import           Text.Read (readMaybe)
 
 run :: IO ()
 run = do
@@ -28,4 +28,8 @@ operators = Map.fromList
   ]
 
 getResult :: String -> String -> String -> Maybe Integer
-getResult i1 i2 i3 = undefined
+getResult i1 i2 i3 = do
+  a <- readMaybe i1
+  c <- readMaybe i3
+  o <- Map.lookup i2 operators
+  pure (o a c)
