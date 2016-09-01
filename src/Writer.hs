@@ -25,10 +25,11 @@ testTree = Node
   ]
 
 go :: Tree -> Writer [Int] ()
-go tree = undefined
+go (Leaf value) = tell [value]
+go (Node tree) = mapM_ go tree
 
 collectEvens :: Tree -> [Int]
-collectEvens tree = execWriter (go tree)
+collectEvens tree = execWriter $ go tree
 
 run :: IO ()
 run = print $ sum $ collectEvens testTree
